@@ -47,7 +47,7 @@ fun CharacterListScreen(
         Column {
             Spacer(modifier = Modifier.height(20.dp))
             Image(
-                painter = painterResource(id = R.drawable.ic_international_pok_mon_logo),
+                painter = painterResource(id = R.drawable.rick_morty),
                 contentDescription = "Rick And Morty Logo",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -127,7 +127,7 @@ fun CharacterList(
         }
 
         items(itemCount) {
-            if (it >= itemCount - 1 && !isEndOfList) {
+            if (it >= itemCount - 1 && !isEndOfList && !isLoading) {
                 viewModel.loadPaginatedCharacters()
             }
             CharacterRow(rowIndex = it, characters = characterList, navController = navController)

@@ -38,7 +38,8 @@ class CharacterListViewModel @Inject constructor(
             val result = repository.getCharactersList(currentPage)
             when (result) {
                 is Resource.Success -> {
-                    isEndOfList.value = Constants.PAGE_SIZE >= result.data!!.info.count
+                    isEndOfList.value =
+                        currentPage * Constants.PAGE_SIZE >= result.data!!.info.count
                     val entries = result.data.results.mapIndexed { _, response ->
                         CharacterListEntry(
                             characterId = response.id,
