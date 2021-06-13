@@ -10,7 +10,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.pratthamarora.rickandmortycompose.characterList.CharacterListScreen
 import com.pratthamarora.rickandmortycompose.ui.theme.RickAndMortyComposeTheme
+import com.pratthamarora.rickandmortycompose.utils.Path
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,28 +24,28 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "character_list_screen"
+                    startDestination = Path.Routes.CHARACTER_LIST_SCREEN.route
                 ) {
-                    composable("character_list_screen") {
-
+                    composable(Path.Routes.CHARACTER_LIST_SCREEN.route) {
+                        CharacterListScreen(navController = navController)
                     }
-                    composable("character_detail_screen/{dominantColor}/{characterId}",
+                    composable("${Path.Routes.CHARACTER_DETAIL_SCREEN.route}/{${Path.Params.DOMINANT_COLOR.param}}/{${Path.Params.CHARACTER_ID.param}}",
                         arguments = listOf(
-                            navArgument("dominantColor") {
+                            navArgument(Path.Params.DOMINANT_COLOR.param) {
                                 type = NavType.IntType
                             },
-                            navArgument("characterId") {
+                            navArgument(Path.Params.CHARACTER_ID.param) {
                                 type = NavType.IntType
                             }
                         )) {
                         val dominantColor = remember {
-                            val color = it.arguments?.getInt("dominantColor")
+                            val color = it.arguments?.getInt(Path.Params.DOMINANT_COLOR.param)
                             color?.let {
                                 Color(it)
                             } ?: Color.White
                         }
                         val characterId = remember {
-                            it.arguments?.getInt("characterId")
+                            it.arguments?.getInt(Path.Params.CHARACTER_ID.param)
                         }
                     }
 
