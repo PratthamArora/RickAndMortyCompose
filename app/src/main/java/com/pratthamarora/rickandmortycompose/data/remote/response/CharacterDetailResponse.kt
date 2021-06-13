@@ -1,6 +1,6 @@
 package com.pratthamarora.rickandmortycompose.data.remote.response
 
-data class CharacterResponse(
+data class CharacterDetailResponse(
     val created: String,
     val episode: List<String>,
     val gender: String,
