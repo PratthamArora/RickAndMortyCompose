@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.CircularProgressIndicator
@@ -63,6 +64,8 @@ fun CharacterListScreen(
             ) {
 
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            CharacterList(navController = navController)
         }
     }
 }
@@ -110,6 +113,33 @@ fun SearchBar(
 }
 
 @Composable
+fun CharacterList(
+    navController: NavController,
+    viewModel: CharacterListViewModel = hiltNavGraphViewModel()
+) {
+    val characterList by remember { viewModel.characterList }
+    val isEndOfList by remember { viewModel.isEndOfList }
+    val loadError by remember { viewModel.loadError }
+    val isLoading by remember { viewModel.isLoading }
+
+    LazyColumn(contentPadding = PaddingValues(16.dp)) {
+        val itemCount = if (characterList.size % 2 == 0) {
+            characterList.size / 2
+        } else {
+            characterList.size / 2 + 1
+        }
+
+        items(itemCount) {
+            if (it >= itemCount - 1 && !isEndOfList) {
+                viewModel.loadPaginatedCharacters()
+            }
+            CharacterRow(rowIndex = it, characters = characterList, navController = navController)
+        }
+    }
+}
+
+
+@Composable
 fun CharacterEntry(
     character: CharacterListEntry,
     navController: NavController,
@@ -140,6 +170,7 @@ fun CharacterEntry(
                     "${Path.Routes.CHARACTER_DETAIL_SCREEN.route}/${dominantColor.toArgb()}/${character.characterId}"
                 )
             }
+
     ) {
         Column {
             CoilImage(
@@ -162,13 +193,15 @@ fun CharacterEntry(
                     modifier = Modifier.scale(0.5f)
                 )
             }
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = character.characterName,
                 fontFamily = RobotoCondensed,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
