@@ -38,7 +38,8 @@ import com.pratthamarora.rickandmortycompose.utils.Path
 
 @Composable
 fun CharacterListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: CharacterListViewModel = hiltNavGraphViewModel()
 ) {
     Surface(
         color = MaterialTheme.colors.background,
@@ -59,7 +60,7 @@ fun CharacterListScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-
+                viewModel.searchCharacterList(it)
             }
             Spacer(modifier = Modifier.height(16.dp))
             CharacterList(navController = navController)
@@ -96,7 +97,7 @@ fun SearchBar(
                 .background(Color.White, RoundedCornerShape(10.dp))
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
-                    isHintDisplayed = it != FocusState.Active
+                    isHintDisplayed = it != FocusState.Active && text.isEmpty()
                 }
         )
         if (isHintDisplayed) {
@@ -118,6 +119,7 @@ fun CharacterList(
     val isEndOfList by remember { viewModel.isEndOfList }
     val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
+    val isSearching by remember { viewModel.isSearching }
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         val itemCount = if (characterList.size % 2 == 0) {
@@ -127,7 +129,7 @@ fun CharacterList(
         }
 
         items(itemCount) {
-            if (it >= itemCount - 1 && !isEndOfList && !isLoading) {
+            if (it >= itemCount - 1 && !isEndOfList && !isLoading && !isSearching) {
                 viewModel.loadPaginatedCharacters()
             }
             CharacterRow(rowIndex = it, characters = characterList, navController = navController)

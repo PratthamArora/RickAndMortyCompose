@@ -13,6 +13,7 @@ import com.pratthamarora.rickandmortycompose.repository.RickMortyRepository
 import com.pratthamarora.rickandmortycompose.utils.Constants
 import com.pratthamarora.rickandmortycompose.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,8 +29,41 @@ class CharacterListViewModel @Inject constructor(
     var isLoading = mutableStateOf(false)
     var isEndOfList = mutableStateOf(false)
 
+    private var cachedCharactersList = listOf<CharacterListEntry>()
+    private var isSearchStarting = true
+    var isSearching = mutableStateOf(false)
+
+
     init {
         loadPaginatedCharacters()
+    }
+
+    fun searchCharacterList(query: String) {
+        val listToSearch = if (isSearchStarting) {
+            characterList.value
+        } else {
+            cachedCharactersList
+        }
+        viewModelScope.launch(Dispatchers.Default) {
+            if (query.isEmpty()) {
+                characterList.value = cachedCharactersList
+                isSearching.value = false
+                isSearchStarting = true
+                return@launch
+            }
+            val results = listToSearch.filter {
+                it.characterName.contains(
+                    query.trim(),
+                    ignoreCase = true
+                ) || it.characterId.toString() == query.trim()
+            }
+            if (isSearchStarting) {
+                cachedCharactersList = characterList.value
+                isSearchStarting = false
+            }
+            characterList.value = results
+            isSearching.value = true
+        }
     }
 
     fun loadPaginatedCharacters() {
