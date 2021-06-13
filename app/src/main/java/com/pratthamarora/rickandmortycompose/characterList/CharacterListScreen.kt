@@ -171,6 +171,33 @@ fun CharacterEntry(
             )
         }
     }
+}
 
+@Composable
+fun CharacterRow(
+    rowIndex: Int,
+    characters: List<CharacterListEntry>,
+    navController: NavController
+) {
+    Column {
+        Row {
+            CharacterEntry(
+                character = characters[rowIndex * 2],
+                navController = navController,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            if (characters.size >= rowIndex * 2 + 2) {
+                CharacterEntry(
+                    character = characters[rowIndex * 2 + 1],
+                    navController = navController,
+                    modifier = Modifier.weight(1f)
+                )
+            } else {
+                Spacer(modifier = Modifier.weight(1f))
 
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+    }
 }
