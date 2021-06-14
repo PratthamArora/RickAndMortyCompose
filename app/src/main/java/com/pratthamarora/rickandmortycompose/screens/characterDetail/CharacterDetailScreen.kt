@@ -30,7 +30,10 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.coil.CoilImage
 import com.pratthamarora.rickandmortycompose.data.remote.response.CharacterDetailResponse
+import com.pratthamarora.rickandmortycompose.ui.theme.Roboto
 import com.pratthamarora.rickandmortycompose.utils.Resource
+import com.pratthamarora.rickandmortycompose.utils.parseStatusToColor
+import java.util.*
 
 @Composable
 fun CharacterDetailScreen(
@@ -188,6 +191,7 @@ fun CharacterDetailLayout(
             color = MaterialTheme.colors.onSurface
         )
         CharacterTypeLayout(characterInfo = listOf(character.status, character.species))
+        CharacterMetaDataLayout(character = character)
     }
 }
 
@@ -207,16 +211,43 @@ fun CharacterTypeLayout(
                     .weight(1f)
                     .padding(horizontal = 8.dp)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colors.secondary)
+                    .background(parseStatusToColor(info))
                     .aspectRatio(3f)
             ) {
                 Text(
-                    text = info,
-                    color = MaterialTheme.colors.onSecondary,
+                    text = info.capitalize(Locale.ROOT),
+                    color = Color.White,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center
                 )
             }
         }
     }
+}
+
+@Composable
+fun CharacterMetaDataLayout(
+    character: CharacterDetailResponse
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Gender: ${character.gender.capitalize(Locale.ROOT)}",
+            color = MaterialTheme.colors.onSurface,
+            fontSize = 22.sp,
+            fontFamily = Roboto,
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = "Origin: ${character.origin.name.capitalize(Locale.ROOT)}",
+            color = MaterialTheme.colors.onSurface,
+            fontSize = 22.sp,
+            fontFamily = Roboto,
+            textAlign = TextAlign.Center
+        )
+    }
+
 }
