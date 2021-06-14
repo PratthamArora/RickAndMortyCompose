@@ -1,4 +1,4 @@
-package com.pratthamarora.rickandmortycompose.characterList
+package com.pratthamarora.rickandmortycompose.screens.characterList
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -103,7 +103,7 @@ fun SearchBar(
         if (isHintDisplayed) {
             Text(
                 text = hint,
-                color = Color.LightGray,
+                color = Color.DarkGray,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
             )
         }

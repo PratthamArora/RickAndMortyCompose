@@ -10,7 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import com.pratthamarora.rickandmortycompose.characterList.CharacterListScreen
+import com.pratthamarora.rickandmortycompose.screens.characterDetail.CharacterDetailScreen
+import com.pratthamarora.rickandmortycompose.screens.characterList.CharacterListScreen
 import com.pratthamarora.rickandmortycompose.ui.theme.RickAndMortyComposeTheme
 import com.pratthamarora.rickandmortycompose.utils.Path
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +48,11 @@ class MainActivity : ComponentActivity() {
                         val characterId = remember {
                             it.arguments?.getInt(Path.Params.CHARACTER_ID.param)
                         }
+                        CharacterDetailScreen(
+                            dominantColor = dominantColor,
+                            characterId = characterId ?: 0,
+                            navController = navController
+                        )
                     }
 
                 }

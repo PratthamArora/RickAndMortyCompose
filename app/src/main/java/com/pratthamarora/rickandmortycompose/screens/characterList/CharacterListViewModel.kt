@@ -1,4 +1,4 @@
-package com.pratthamarora.rickandmortycompose.characterList
+package com.pratthamarora.rickandmortycompose.screens.characterList
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
