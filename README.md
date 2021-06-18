@@ -10,15 +10,18 @@ A Rick and Morty app built with [Jetpack Compose](https://developer.android.com/
 
 
 ## ✨ Features
-      - Compose UI
-      - Kotlin Coroutines
-      - Compose Navigation
-      - MVVM Architecture 
-      - Dependency Injection using Dagger-Hilt
-      - Coil for Image Loading
-      - Pallete for color extraction
-      - Dark mode support
-      - Retrofit for networking
+
+- Compose UI
+- Kotlin Coroutines
+- Compose Navigation
+- MVVM Architecture 
+- Dependency Injection using Dagger-Hilt
+- Coil for Image Loading
+- Pallete for color extraction
+- Dark mode support
+- Retrofit for REST Api calls
+- Pagination
+- Search functionality
      
 
 
