@@ -200,6 +200,7 @@ fun CharacterEntry(
                 modifier = Modifier
                     .size(120.dp)
                     .align(CenterHorizontally)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 CircularProgressIndicator(
                     color = MaterialTheme.colors.primary,

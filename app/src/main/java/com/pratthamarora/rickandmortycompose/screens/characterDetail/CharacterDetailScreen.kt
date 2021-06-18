@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
+import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.CoilImage
 import com.pratthamarora.rickandmortycompose.data.remote.response.CharacterDetailResponse
 import com.pratthamarora.rickandmortycompose.ui.theme.Roboto
@@ -99,10 +100,14 @@ fun CharacterDetailScreen(
                     CoilImage(
                         data = it,
                         contentDescription = characterInfo.data.name,
+                        requestBuilder = {
+                            transformations(CircleCropTransformation())
+                        },
                         fadeIn = true,
                         modifier = Modifier
                             .size(imageSize)
                             .offset(y = topPadding)
+
                     )
                 }
             }
