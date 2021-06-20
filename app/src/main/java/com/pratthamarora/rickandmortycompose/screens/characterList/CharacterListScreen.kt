@@ -34,7 +34,7 @@ import com.google.accompanist.coil.CoilImage
 import com.pratthamarora.rickandmortycompose.R
 import com.pratthamarora.rickandmortycompose.data.models.CharacterListEntry
 import com.pratthamarora.rickandmortycompose.ui.theme.RobotoCondensed
-import com.pratthamarora.rickandmortycompose.utils.Path
+import com.pratthamarora.rickandmortycompose.utils.Routes
 
 @Composable
 fun CharacterListScreen(
@@ -180,7 +180,7 @@ fun CharacterEntry(
             )
             .clickable {
                 navController.navigate(
-                    "${Path.Routes.CHARACTER_DETAIL_SCREEN.route}/${dominantColor.toArgb()}/${character.characterId}"
+                    "${Routes.CHARACTER_DETAIL_SCREEN.route}/${dominantColor.toArgb()}/${character.characterId}"
                 )
             }
 

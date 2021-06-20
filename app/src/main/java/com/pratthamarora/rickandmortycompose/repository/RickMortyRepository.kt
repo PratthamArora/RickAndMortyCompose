@@ -26,13 +26,14 @@ class RickMortyRepository @Inject constructor(
             return@withContext Resource.Success(response)
         }
 
-    suspend fun getCharacterDetails(characterId: Int): Resource<CharacterDetailResponse> {
-        val response = try {
-            api.getCharacterDetails(id = characterId)
-        } catch (e: Exception) {
-            Timber.e(e)
-            return Resource.Error(e.localizedMessage ?: "An error occurred")
+    suspend fun getCharacterDetails(characterId: Int): Resource<CharacterDetailResponse> =
+        withContext(Dispatchers.IO) {
+            val response = try {
+                api.getCharacterDetails(id = characterId)
+            } catch (e: Exception) {
+                Timber.e(e)
+                return@withContext Resource.Error(e.localizedMessage ?: "An error occurred")
+            }
+            return@withContext Resource.Success(response)
         }
-        return Resource.Success(response)
-    }
 }
