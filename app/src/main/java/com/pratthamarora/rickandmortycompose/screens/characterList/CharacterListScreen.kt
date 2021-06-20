@@ -231,18 +231,22 @@ fun CharacterRow(
             CharacterEntry(
                 character = characters[rowIndex * 2],
                 navController = navController,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .wrapContentHeight()
             )
             Spacer(modifier = Modifier.width(16.dp))
             if (characters.size >= rowIndex * 2 + 2) {
                 CharacterEntry(
                     character = characters[rowIndex * 2 + 1],
                     navController = navController,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentHeight()
+
                 )
             } else {
                 Spacer(modifier = Modifier.weight(1f))
-
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
